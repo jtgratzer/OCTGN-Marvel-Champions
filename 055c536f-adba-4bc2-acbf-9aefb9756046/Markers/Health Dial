@@ -1,23 +1,79 @@
-def incrementDial(card, x=0, y=0):
-    current_value = getDialValue(card)
-    new_value = (current_value + 1) % 100
-    replaceDial(card, new_value)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dial UI</title>
+  <style>
+    body {
+      background: #1a1f2b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
 
-def decrementDial(card, x=0, y=0):
-    current_value = getDialValue(card)
-    new_value = (current_value - 1) % 100
-    replaceDial(card, new_value)
+    .dial-container {
+      background: #c62828;
+      border: 5px solid #0d47a1;
+      border-radius: 50px;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
 
-def getDialValue(card):
-    try:
-        return int(card.Name.split()[1])
-    except:
-        return 0
+    .dial-button {
+      background: #212121;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      margin: 0 20px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    }
 
-def replaceDial(card, new_value):
-    pos = card.position
-    owner = card.controller
-    mute()
-    card.delete()
-    new_card = table.create("Dial {:02}".format(new_value), pos.x, pos.y)
-    new_card.controller = owner
+    .dial-display {
+      background: #0d47a1;
+      color: white;
+      font-size: 2.5em;
+      width: 80px;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: 10px;
+      border: 3px solid #ffffff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dial-container">
+  <button class="dial-button" onclick="increaseDial()"></button>
+  <div class="dial-display" id="dialDisplay">00</div>
+  <button class="dial-button" onclick="decreaseDial()"></button>
+</div>
+
+<script>
+  let currentValue = 0;
+
+  function updateDisplay() {
+    const display = document.getElementById("dialDisplay");
+    display.textContent = currentValue.toString().padStart(2, '0');
+  }
+
+  function increaseDial() {
+    currentValue = (currentValue + 1) % 100;
+    updateDisplay();
+  }
+
+  function decreaseDial() {
+    currentValue = (currentValue - 1 + 100) % 100;
+    updateDisplay();
+  }
+</script>
+
+</body>
+</html>
+
