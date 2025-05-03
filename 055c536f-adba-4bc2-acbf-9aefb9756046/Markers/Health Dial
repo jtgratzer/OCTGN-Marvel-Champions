@@ -1,0 +1,23 @@
+def incrementDial(card, x=0, y=0):
+    current_value = getDialValue(card)
+    new_value = (current_value + 1) % 100
+    replaceDial(card, new_value)
+
+def decrementDial(card, x=0, y=0):
+    current_value = getDialValue(card)
+    new_value = (current_value - 1) % 100
+    replaceDial(card, new_value)
+
+def getDialValue(card):
+    try:
+        return int(card.Name.split()[1])
+    except:
+        return 0
+
+def replaceDial(card, new_value):
+    pos = card.position
+    owner = card.controller
+    mute()
+    card.delete()
+    new_card = table.create("Dial {:02}".format(new_value), pos.x, pos.y)
+    new_card.controller = owner
